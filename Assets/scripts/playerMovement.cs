@@ -1,20 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Policy;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class playerMovement : MonoBehaviour
 {
     public float Speed;
-
+    public int Score = 0;
     public float LaserBeamCoolDown = 1;
     public float NextFire;
-    public AudioSource audioSource;
+    private AudioSource audioSource;
+    private GameObject HUD_Score;
+    
 
     // Use this for initialization
 	void Start ()
 	{
 	    audioSource = GetComponent<AudioSource>();
+	    HUD_Score = GameObject.FindGameObjectWithTag("Score");
 	}
 	
 	// Update is called once per frame
@@ -53,4 +58,12 @@ public class playerMovement : MonoBehaviour
             }
         }
 	}
+
+    public void IncreaseScore(int score)
+    {
+        Debug.Log("recieves score");
+        this.Score += score;
+        HUD_Score.SendMessage("UpdateScore", score);
+    }
+
 }
