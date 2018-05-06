@@ -6,7 +6,10 @@ public class playerMovement : MonoBehaviour
 {
     public float Speed;
 
-	// Use this for initialization
+    public float LaserBeamCoolDown = 1;
+    public float nextFire;
+	
+    // Use this for initialization
 	void Start ()
 	{
 	    
@@ -35,11 +38,16 @@ public class playerMovement : MonoBehaviour
 	        transform.Translate(Vector3.right * Speed * Time.deltaTime);
         }
 
-	    if (Input.GetKeyDown(KeyCode.Space))
+	    if (Input.GetKey(KeyCode.Space))
 	    {
-            // shoot / spawn bullet
-	        GameObject bullet = Instantiate(Resources.Load("laserbeam", typeof(GameObject))) as GameObject;
-	        bullet.transform.position = transform.position;
+	        // shoot / spawn bullet
+	        if (Time.time > nextFire)
+	        {
+	            GameObject bullet = Instantiate(Resources.Load("laserbeam", typeof(GameObject))) as GameObject;
+	            bullet.transform.position = transform.position;
+	            nextFire = Time.time + LaserBeamCoolDown;
+
+            }
         }
 	}
 }
