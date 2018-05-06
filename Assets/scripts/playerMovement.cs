@@ -35,9 +35,11 @@ public class playerMovement : MonoBehaviour
 	        transform.Translate(Vector3.right * Speed * Time.deltaTime);
         }
 
-	    if (Input.GetKey(KeyCode.Space))
+	    if (Input.GetKeyDown(KeyCode.Space))
 	    {
             // shoot / spawn bullet
-	    }
+	        GameObject bullet = Instantiate(Resources.Load("laserbeam", typeof(GameObject))) as GameObject;
+	        bullet.transform.position = transform.position;
+        }
 	}
 }
