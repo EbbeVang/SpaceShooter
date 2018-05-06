@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class playerMovement : MonoBehaviour
@@ -7,12 +8,13 @@ public class playerMovement : MonoBehaviour
     public float Speed;
 
     public float LaserBeamCoolDown = 1;
-    public float nextFire;
-	
+    public float NextFire;
+    public AudioSource audioSource;
+
     // Use this for initialization
 	void Start ()
 	{
-	    
+	    audioSource = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -41,11 +43,12 @@ public class playerMovement : MonoBehaviour
 	    if (Input.GetKey(KeyCode.Space))
 	    {
 	        // shoot / spawn bullet
-	        if (Time.time > nextFire)
+	        if (Time.time > NextFire)
 	        {
 	            GameObject bullet = Instantiate(Resources.Load("laserbeam", typeof(GameObject))) as GameObject;
 	            bullet.transform.position = transform.position;
-	            nextFire = Time.time + LaserBeamCoolDown;
+                audioSource.Play();
+                NextFire = Time.time + LaserBeamCoolDown;
 
             }
         }
